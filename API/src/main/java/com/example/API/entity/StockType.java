@@ -1,4 +1,4 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 public enum StockType {
     IMPORT,

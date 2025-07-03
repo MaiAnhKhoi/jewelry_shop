@@ -1,27 +1,29 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Feedback {
+@Table(name = "VoucherUsage")
+public class VoucherUsage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer feedbackID;
+    private Integer usageID;
 
     @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
+    @ManyToOne
+    @JoinColumn(name = "orderID")
+    private Order order;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @ManyToOne
+    @JoinColumn(name = "voucherCode")
+    private Voucher voucher;
 }

@@ -1,4 +1,4 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,17 +11,21 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductImport {
+public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer importID;
+    private Integer contactID;
 
     @ManyToOne
-    @JoinColumn(name = "supplierID")
-    private Supplier supplier;
+    @JoinColumn(name = "userID")
+    private User user;
 
-    private LocalDateTime importedAt = LocalDateTime.now();
+    @Column(length = 100)
+    private String subject;
 
     @Column(columnDefinition = "TEXT")
-    private String note;
+    private String message;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 }
+

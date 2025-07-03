@@ -1,10 +1,11 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,28 +13,30 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Review {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer reviewID;
+    private Integer orderID;
 
     @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "productID")
-    private Product product;
+    @JoinColumn(name = "addressID")
+    private Address address;
 
-    private Integer rating;
+    private BigDecimal totalAmount;
+
+    private String voucherCode;
+
+    private String status;
 
     @Column(columnDefinition = "TEXT")
-    private String comment;
+    private String note;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CommentLike> likes;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
 }
-
-

@@ -1,9 +1,7 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,32 +10,33 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userID;
 
-    @Column(length = 100)
     private String fullName;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String passwordHash;
 
-    @Column(length = 20)
-    private String phone;
+    private String provider;
+    private String providerId;
 
-    @Column(length = 255)
+    private String phone;
     private String avatar;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "roleID")
     private Role role;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> addresses;
 }
+
+//huy

@@ -1,36 +1,26 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItem {
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderItemID;
+    private Integer cartItemID;
 
     @ManyToOne
-    @JoinColumn(name = "orderID")
-    private Order order;
+    @JoinColumn(name = "cartID")
+    private Cart cart;
 
     @ManyToOne
     @JoinColumn(name = "variantID")
     private ProductVariant variant;
-
-    @Column(length = 100)
-    private String productName;
-
-    @Column(length = 100)
-    private String variantName;
-
-    private BigDecimal unitPrice;
 
     private Integer quantity;
 }

@@ -1,4 +1,4 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,23 +9,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer addressID;
+    private Integer favoriteID;
 
     @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
 
-    @Column(length = 100)
-    private String receiverName;
-
-    @Column(length = 20)
-    private String phone;
-
-    @Column(length = 255)
-    private String fullAddress;
-
-    private Boolean isDefault = false;
+    @ManyToOne
+    @JoinColumn(name = "productID")
+    private Product product;
 }

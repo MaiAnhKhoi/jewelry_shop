@@ -1,6 +1,5 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
-import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,26 +7,20 @@ import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Slider {
+public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer sliderID;
+    private Integer supplierID;
 
     @Column(length = 100)
-    private String title;
+    private String name;
 
-    @Column(length = 255)
-    private String imageURL;
-
-    @Column(length = 255)
-    private String linkURL;
-
-    private Integer displayOrder = 0;
-
-    private Boolean isActive = true;
+    @Column(columnDefinition = "TEXT")
+    private String contactInfo;
 }

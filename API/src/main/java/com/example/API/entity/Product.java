@@ -1,4 +1,4 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +24,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "categoryID")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "brandID")
+    private Brand brand;
 
     @Column(length = 100)
     private String name;

@@ -1,4 +1,4 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,22 +11,17 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Message {
+public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer messageID;
+    private Integer feedbackID;
 
     @ManyToOne
-    @JoinColumn(name = "conversationID")
-    private Conversation conversation;
-
-    @Enumerated(EnumType.STRING)
-    private SenderType sender;
-
-    private Integer senderID;
+    @JoinColumn(name = "userID")
+    private User user;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private LocalDateTime sentAt = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

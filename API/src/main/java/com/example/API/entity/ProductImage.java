@@ -1,23 +1,23 @@
-package com.example.API.Entity;
+package com.example.API.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "ProductImages")
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer imageID;
 
+    private String imageURL;
+
     @ManyToOne
     @JoinColumn(name = "productID")
     private Product product;
-
-    @Column(length = 255)
-    private String imageURL;
 }
+
+//huy
