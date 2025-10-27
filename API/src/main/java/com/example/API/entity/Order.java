@@ -1,42 +1,47 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Table(name = "orders")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderID;
+    @Column(name = "order_id")
+    private Integer orderId;
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "addressID")
+    @JoinColumn(name = "address_id")
     private Address address;
 
-    private BigDecimal totalAmount;
+    @Column(name = "total_amount")
+    private Double totalAmount;
 
-    private String voucherCode;
-
+    @Column(name = "status")
     private String status;
 
-    @Column(columnDefinition = "TEXT")
-    private String note;
+    @Column(name = "voucher_code")
+    private String voucherCode;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderItem> items;
 }

@@ -1,24 +1,36 @@
-package com.example.API.entity;
+package com.example.API.Entity;
+
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Table(name = "conversations")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Conversation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer conversationID;
+    @Column(name = "conversation_id")
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "userID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "is_ai_enabled")
+    private Boolean isAiEnabled;
+
+    private String status;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
+    private List<Message> messages;
 }

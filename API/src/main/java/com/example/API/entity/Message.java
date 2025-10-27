@@ -1,32 +1,36 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Entity
+@Table(name = "messages")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer messageID;
+    @Column(name = "message_id")
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "conversationID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conversation_id")
     private Conversation conversation;
 
-    @Enumerated(EnumType.STRING)
-    private SenderType sender;
-
-    private Integer senderID;
+    private String sender;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private LocalDateTime sentAt = LocalDateTime.now();
+    @Column(name = "sent_at")
+    private LocalDateTime sentAt;
+
+    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL)
+    private List<MessageImage> images;
 }

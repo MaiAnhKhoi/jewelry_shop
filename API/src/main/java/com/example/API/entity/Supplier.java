@@ -1,24 +1,21 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Data
+@Table(name = "suppliers")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Supplier {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer supplierID;
+    private Integer supplierId;
 
-    @Column(length = 100)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @Column(columnDefinition = "TEXT")

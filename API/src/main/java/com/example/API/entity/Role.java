@@ -1,19 +1,22 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
+@Table(name = "roles")  // tên bảng viết thường snake_case
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Roles")
+@Builder
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer roleID;
+    @Column(name = "role_id")
+    private Integer roleId;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 }
-//huy

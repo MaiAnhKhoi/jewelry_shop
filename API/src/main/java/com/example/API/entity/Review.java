@@ -1,39 +1,51 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Table(name = "reviews")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Review {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer reviewID;
+    @Column(name = "review_id")
+    private Integer reviewId;
 
-    @ManyToOne
-    @JoinColumn(name = "userID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "productID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
     private Product product;
 
+    @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "title", length = 100)
+    private String title;
+
+    @Lob
+    @Column(name = "comment")
     private String comment;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ReviewImage> imageList;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CommentLike> likes;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 }
-
-

@@ -1,26 +1,29 @@
-package com.example.API.entity;
+package com.example.API.Entity;
+
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
+@Table(name = "cart_items")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cartItemID;
+    @Column(name = "cart_item_id")
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "cartID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-    @ManyToOne
-    @JoinColumn(name = "variantID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "variant_id", nullable = false)
     private ProductVariant variant;
 
-    private Integer quantity;
+    @Column(nullable = false)
+    private int quantity;
 }

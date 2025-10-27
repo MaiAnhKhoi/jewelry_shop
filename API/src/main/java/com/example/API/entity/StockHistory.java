@@ -1,33 +1,44 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Table(name = "stock_history")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class StockHistory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer stockID;
+    private Integer stockId;
 
-    @ManyToOne
-    @JoinColumn(name = "variantID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "variant_id", nullable = false)
     private ProductVariant variant;
 
-    @ManyToOne
-    @JoinColumn(name = "importID")
-    private ProductImport importEntry;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "import_id")
+    private ProductImport productImport;
 
+    @Column(nullable = false)
     private Integer quantity;
 
-    @Enumerated(EnumType.STRING)
-    private StockType type;
+    @Column(nullable = false)
+    private Double unitPrice;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(nullable = false, length = 10)
+    private String type;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

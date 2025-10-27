@@ -1,21 +1,25 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
+@Table(name = "brands")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Brands")
+@Builder
 public class Brand {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer brandID;
+    @Column(name = "brand_id")
+    private Integer brandId;
 
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
-    private String logoURL;
+
+    @Column(name = "logo_url", length = 255)
+    private String logoUrl;
 }
-
-
-//huy

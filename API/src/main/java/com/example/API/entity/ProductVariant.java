@@ -1,26 +1,37 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
+@Table(name = "product_variants")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ProductVariants")
+@Builder
 public class ProductVariant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer variantID;
-
-    private String color;
-    private String size;
-    private Double price;
-    private Integer stock;
+    @Column(name = "variant_id")
+    private Integer variantId;
 
     @ManyToOne
-    @JoinColumn(name = "productID")
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
     private Product product;
-}
 
-//huy
+    @Column(name = "color", length = 50)
+    private String color;
+
+    @Column(name = "size", length = 50)
+    private String size;
+
+    @Column(name = "price", nullable = false)
+    private Double price;
+
+    @Column(name = "stock", nullable = false)
+    private Integer stock;
+}

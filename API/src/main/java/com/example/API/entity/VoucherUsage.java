@@ -1,29 +1,35 @@
-package com.example.API.entity;
+package com.example.API.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Table(name = "voucher_usage")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "VoucherUsage")
+@Builder
 public class VoucherUsage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer usageID;
+    private Integer usageId;
 
-    @ManyToOne
-    @JoinColumn(name = "userID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "orderID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "voucher_id")
+    private Voucher voucher;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "voucherCode")
-    private Voucher voucher;
+    @Column(name = "used_at")
+    private LocalDateTime usedAt = LocalDateTime.now();
 }
